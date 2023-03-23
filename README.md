@@ -1,5 +1,11 @@
 # CeubLivre-API
 
+# Monkey Pay - pagamentos a preço de banana!
+
+<p align="center">
+<img alt="mamaco-do-pix" src="https://user-images.githubusercontent.com/111470290/227385788-bbb22074-05be-43a4-b588-8f2c2877f53a.gif"/>
+</p>
+
 ## Pagamentos
 Este microsserviço gerencia o processo de pagamento para os produtos comprados no marketplace.
 
