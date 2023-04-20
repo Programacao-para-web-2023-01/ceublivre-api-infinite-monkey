@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from src.dominio.pix import PixData
-
 router = APIRouter()
 
 @router.post('/pix')
