@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
 
-class ProductBase(BaseModel):
+class PaymentMethodBase(BaseModel):
     type: str
     service: str
 
 
-class ProductCreate(BaseModel):
+class PaymentMethodCreate(BaseModel):
     type: str
     service: str
