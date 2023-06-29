@@ -26,38 +26,48 @@ def get_db() -> Generator:
 
 @router.post("/")
 def create_transaction(transaction: TransactionCreate, db: Session = Depends(get_db)):
-    if (transaction.payment_method.type == 'ONLINE_SERVICES') {
-        if (transaction.payment_method.service == 'PAYPAL' and app.endpoints.paypal.create_payment(transaction.value, 'R$')) {
-            return {"status": "succesful"}
-        } elif (transaction.payment_method.service == 'STRIPE' and app.endpoints.stripe.create_payment(transaction.value, 'R$')) {
-            return {"status": "succesful"}
-        } elif (transaction.payment_method.service == 'WISE' and app.endpoints.wise.create_payment(transaction.value, 'R$')) {
-            return {"status": "succesful"}
-        }
-    }
+    if transaction.payment_method.type == 'ONLINE_SERVICES':
+        if transaction.payment_method.service == 'PAYPAL':
+            response = paypal.create_payment(transaction.value, 'R$')
+            if response.get('status') == 'succesful':
+                return {"status": "successful"}
+        elif transaction.payment_method.service == 'STRIPE':
+            response = stripe.create_payment(transaction.value, 'R$')
+            if response.get('status') == 'succesful':
+                return {"status": "successful"}
+        elif transaction.payment_method.service == 'WISE':
+            response = wise.create_payment(transaction.value, 'R$')
+            if response.get('status') == 'succesful':
+                return {"status": "successful"}
+    
     return {"status": "failed"}
 
 
 @router.get("/")
-def read_categories(transaction: TransactionBase, db: Session = Depends(get_db)):
-    return transaction.toString()
+def read_transactions(db: Session = Depends(get_db)):
+    return {"message": "Read all transactions"}
 
 
 @router.get("/{transaction_id}")
-def read_category(transaction_id: int, product: TransactionBase, db: Session = Depends(get_db)):
-    return {"Hello": "World"}
+def read_transaction(transaction_id: int, db: Session = Depends(get_db)):
+    return {"message": f"Read transaction {transaction_id}"}
 
 
 @router.put("/{transaction_id}")
-def update_category(transaction_id: int, product: TransactionBase, db: Session = Depends(get_db)):
-    return {"Hello": "World"}
+def update_transaction(transaction_id: int, db: Session = Depends(get_db)):
+    return {"message": f"Update transaction {transaction_id}"}
 
 
 @router.delete("/{transaction_id}")
-def delete_category(transaction_id: int, product: TransactionBase, db: Session = Depends(get_db)):
-    return {"Hello": "World"}
+def delete_transaction(transaction_id: int, db: Session = Depends(get_db)):
+    return {"message": f"Delete transaction {transaction_id}"}
+
+
+@router.get("/{transaction_id}/payment-method")
+def read_transaction_payment_method(transaction_id: int, db: Session = Depends(get_db)):
+    return {"message": f"Read payment method for transaction {transaction_id}"}
 
 
 @router.get("/{transaction_id}/transactions")
-def read_category_products(transaction_id: int, product: TransactionBase, db: Session = Depends(get_db)):
-    return {}
+def read_transaction_payment_methods(transaction_id: int, db: Session = Depends(get_db)):
+    return {"message": f"Read transactions associated with transaction {transaction_id}"}
