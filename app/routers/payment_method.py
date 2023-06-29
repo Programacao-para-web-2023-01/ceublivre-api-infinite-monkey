@@ -53,6 +53,6 @@ def delete_payment_method(payment_method_id: int, product: PaymentMethodBase, db
     return {"Hello": "World"}
 
 
-@router.get("/{payment_method_id}/products")
-def read_payment_method_products(payment_method_id: int, product: PaymentMethodBase, db: Session = Depends(get_db)):
+@router.get("/{payment_method_id}/transactions")
+def read_payment_method_transactions(payment_method_id: int, product: PaymentMethodBase, db: Session = Depends(get_db)):
     return {}
